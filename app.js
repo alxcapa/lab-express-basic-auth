@@ -8,6 +8,9 @@ const mongoose = require('mongoose');
 const logger = require('morgan');
 const path = require('path');
 
+
+
+
 const app_name = require('./package.json').name;
 const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.')[0]}`);
 
@@ -19,7 +22,9 @@ require('./configs/db.config');
 // Middleware Setup
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+    extended: false
+}));
 app.use(cookieParser());
 
 // Express View engine setup
@@ -33,5 +38,8 @@ app.locals.title = 'Express - Generated with IronGenerator';
 
 const index = require('./routes/index.routes');
 app.use('/', index);
+
+const auth = require('./routes/auth.routes');
+app.use('/', auth);
 
 module.exports = app;
